@@ -28,5 +28,8 @@ public class Profesor extends Persona{
 	public void setImparte(Asignatura[] asignaturas) {
 		this.asignaturas = asignaturas;
 	}
-	
+
+	public static void test(){
+		System.out.println("fdahfasd");
+	}
 }

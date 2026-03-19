@@ -40,7 +40,7 @@ public class Principal {
 			System.out.print(menuProfesores);
 			Scanner sc = new Scanner(System.in);
 			eleccion = sc.nextInt();
-			//if (eleccion==1) {Profesor.visualizar();}
+			if (eleccion==1) {Profesor.test();}
 			else if (eleccion==2) {menuAsignatura();}
 			else if (eleccion==3) {menuProfesores();}
 			else if (eleccion==0) {return;}
