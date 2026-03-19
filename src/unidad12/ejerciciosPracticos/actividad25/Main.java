@@ -1,12 +1,8 @@
-package unidad12.ejerciciosPracticos.actividad16;
-import java.nio.file.LinkOption;
-import java.time.LocalDate;
-import java.util.*;
-import java.io.Serializable;
+package unidad12.ejerciciosPracticos.actividad25;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-
+import java.util.*;
 
 
 public class Main {
@@ -22,7 +18,7 @@ public class Main {
                 6. Salir
                 """;
 
-        TreeSet<Socio> socios = new TreeSet<>();
+        Map<String, Socio> socios = new HashMap<>();
 
         int eleccion;
 
@@ -67,19 +63,19 @@ public class Main {
     }
 
 
-    public static void altaSocio(TreeSet<Socio> socios, Scanner sc){
-        String dni;
+    public static void altaSocio(Map<String, Socio> socios, Scanner sc){
+        String apodo;
         String nombre;
         DateTimeFormatter formatoEuropeo = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fechaAlta = LocalDate.now().format(formatoEuropeo);
 
 
-        System.out.println("Introduzca el DNI del socio.");
-        dni = sc.next();
+        System.out.println("Introduzca el apodo del socio.");
+        apodo = sc.next();
 
 
 
-        if (socios.contains(new Socio(dni))) {
+        if (socios.containsKey(apodo)){
             System.out.println("El socio ya existe");
             return;
         }
@@ -87,42 +83,38 @@ public class Main {
         System.out.println("Introduzca el nombre del socio.");
         nombre = sc.next();
 
-        socios.add(new Socio(dni, nombre, fechaAlta));
-//      socios.add(new Socio(dni+1, nombre, generarFechaAleatoria()));      <-- tester de funcionamiento del orden
-//      socios.add(new Socio(dni+2, nombre, generarFechaAleatoria()));          por antigüedad
+        socios.put(apodo, new Socio(apodo, nombre, fechaAlta));
     }
 
 
 
 
-    public static boolean bajaSocio(TreeSet<Socio> socios, Scanner sc){
-        String dni;
+    public static boolean bajaSocio(Map<String, Socio> socios, Scanner sc){
+        String apodo;
 
-        System.out.println("Introduzca el DNI del socio a dar de baja.");
-        dni = sc.next();
+        System.out.println("Introduzca el apodo del socio a dar de baja.");
+        apodo = sc.next();
 
-        return socios.remove(new Socio(dni));
+        return socios.remove(apodo) != null; // remove en maps devuelve el objeto eliminado. lo comparo con null para ver si ha eliminado algo o no
     }
 
 
 
 
-    public static void modificarSocio(TreeSet<Socio> socios, Scanner sc) {
+    public static void modificarSocio(Map<String, Socio> socios, Scanner sc) {
 
-        String dni;
+        String apodo;
         String nombre;
         DateTimeFormatter formatoEuropeo = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        System.out.println("Introduzca el DNI del socio a modificar.");
-        dni = sc.next();
+        System.out.println("Introduzca el apodo del socio a modificar.");
+        apodo = sc.next();
 
-        if (socios.contains(new Socio(dni))){
-            String fechaAlta = buscarSocio(socios, dni).getFechaAlta().format(formatoEuropeo).toString();
-
-            socios.remove(new Socio(dni));
+        if (socios.containsKey(apodo)){
+            String fechaAlta = buscarSocio(socios, apodo).getFechaAlta().format(formatoEuropeo).toString();
             System.out.println("Introduce el nuevo nombre");
             nombre = sc.next();
-            socios.add(new Socio(dni, nombre, fechaAlta));
+            socios.put(apodo, new Socio(apodo, nombre, fechaAlta));
             System.out.println("Socio modificado");
 
         } else System.out.println("El socio no está dado de alta");
@@ -132,18 +124,13 @@ public class Main {
 
 
 
-    public static Socio buscarSocio(TreeSet<Socio> socios, String dni) {
-        for (Socio s : socios) {
-            if (s.getDni().equals(dni)) {
-                return s;
-            }
-        }
-        return null;
+    public static Socio buscarSocio(Map<String, Socio> socios, String apodo) {
+        return socios.get(apodo);
     }
 
 
-    public static void listarNombre(TreeSet<Socio> socios){
-        List<Socio> lista = new ArrayList<>(socios);
+    public static void listarNombre(Map<String, Socio> socios){
+        List<Socio> lista = new ArrayList<>(socios.values());
 
         Comparator<Socio> comparadorNombre = new Comparator<Socio>() {
             @Override
@@ -161,8 +148,8 @@ public class Main {
 
     }
 
-    public static void listarAntiguedad(TreeSet<Socio> socios){
-        List<Socio> lista = new ArrayList<>(socios);
+    public static void listarAntiguedad(Map<String, Socio> socios){
+        List<Socio> lista = new ArrayList<>(socios.values());
 
         Comparator<Socio> comparadorAntiguedad = new Comparator<Socio>() {
             @Override

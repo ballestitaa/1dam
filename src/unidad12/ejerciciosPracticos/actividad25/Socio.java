@@ -1,4 +1,4 @@
-package unidad12.ejerciciosPracticos.actividad16;
+package unidad12.ejerciciosPracticos.actividad25;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,32 +8,32 @@ import java.util.Objects;
 
 public class Socio implements Comparable<Socio>, Serializable {
 
-    String dni;
+    String apodo;
     String nombre;
     LocalDate fechaAlta;
 
-    public Socio(String dni, String nombre, String alta) {
-        this.dni = dni;
+    public Socio(String apodo, String nombre, String alta) {
+        this.apodo = apodo;
         this.nombre = nombre;
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.fechaAlta = LocalDate.parse(alta, f);
     }
 
 
-    public Socio(String dni) {
-        this.dni = dni;
+    public Socio(String apodo) {
+        this.apodo = apodo;
     }
 
     int antiguedad() {
         return (int) fechaAlta.until(LocalDate.now(), ChronoUnit.YEARS);
     }
 
-    public String getDni() {
-        return dni;
+    public String getApodo() {
+        return apodo;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setApodo(String apodo) {
+        this.apodo = apodo;
     }
 
     public String getNombre() {
@@ -54,7 +54,7 @@ public class Socio implements Comparable<Socio>, Serializable {
 
     @Override
     public int compareTo(Socio o) {
-        return dni.compareTo(o.dni);
+        return apodo.compareTo(o.apodo);
     }
 
 
@@ -69,17 +69,17 @@ public class Socio implements Comparable<Socio>, Serializable {
             return false;
         }
 
-        return dni.equals(((Socio) o).dni);
+        return apodo.equals(((Socio) o).apodo);
     }
 
     @Override
     public String toString() {
-        return "Socio{" + "dni=" + dni + ", nombre=" + nombre
+        return "Socio{" + "apodo=" + apodo + ", nombre=" + nombre
                 + ", antiguedad=" + antiguedad() + "}\n";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dni);
+        return Objects.hash(apodo);
     }
 }
