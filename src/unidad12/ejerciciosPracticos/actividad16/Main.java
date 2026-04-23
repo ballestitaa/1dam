@@ -31,7 +31,6 @@ public class Main {
             System.out.println(menu);
 
             eleccion = sc.nextInt();
-
             switch (eleccion){
                 case 1:
                     altaSocio(socios, sc);
